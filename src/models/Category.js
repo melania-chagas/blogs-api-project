@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: Sequelize.STRING,
+    name: DataTypes.STRING,
     },
     
     {
