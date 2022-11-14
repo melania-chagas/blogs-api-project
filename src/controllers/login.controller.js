@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { createToken } = require('../auth/validateJTS');
+const { createToken } = require('../auth/validateJTW');
 
 const controllerLogin = async (req, res) => {
   const { email, password } = req.body;

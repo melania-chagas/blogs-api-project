@@ -34,6 +34,7 @@
   "devDependencies": {
     "change-case": "4.1.2",
     "dotenv": "^16.0.3",
+    "email-validator": "^2.0.4",
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-config-trybe-backend": "1.0.3",
