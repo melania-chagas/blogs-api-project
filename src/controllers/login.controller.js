@@ -1,11 +1,17 @@
 const { User } = require('../models');
 const { createToken } = require('../auth/validateJTW');
 
+const statusCodes = require('../helpers/statusCodes');
+const errorMessages = require('../helpers/errorMessages');
+
+const { BadRequest, Created } = statusCodes;
+const { requiredFields, invalidFields } = errorMessages;
+
 const controllerLogin = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
+    return res.status(BadRequest).json({ message: requiredFields });
   }
 
   const user = await User.findOne({
@@ -13,11 +19,11 @@ const controllerLogin = async (req, res) => {
   });
 
   if (!user || user.password !== password) {
-    return res.status(400).json({ message: 'Invalid fields' });
+    return res.status(BadRequest).json({ message: invalidFields });
   }
 
   const token = createToken(user.id);
-  res.status(200).json({ token });
+  res.status(Created).json({ token });
 };
 
 module.exports = controllerLogin;
