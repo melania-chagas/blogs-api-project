@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { createToken } = require('../auth/validateJTW');
+const { createToken } = require('../auth/jsonWebToken');
 
 const serviceInsertUser = async (body) => {
   const { displayName, email, password } = body;
