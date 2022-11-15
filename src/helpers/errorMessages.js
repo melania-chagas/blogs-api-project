@@ -5,4 +5,6 @@ module.exports = {
   invalidEmail: '"email" must be a valid email',
   minPassword6Characters: '"password" length must be at least 6 characters long',
   emailAlreadyExists: 'User already registered',
+  tokenNotFound: 'Token not found',
+  expiredOrInvalidToken: 'Expired or invalid token',
 };

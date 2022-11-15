@@ -2,11 +2,13 @@ const express = require('express');
 
 const loginValidation = require('../middlewares/validationLogin');
 const controllerUser = require('../controllers/user.controller');
+const validationJWT = require('../middlewares/validationJWT');
 
-const { signUp } = controllerUser;
+const { controllerSignUp, controllerGetAllUsers } = controllerUser;
 
 const userRouter = express.Router();
 
-userRouter.post('/', loginValidation, signUp);
+userRouter.post('/', loginValidation, controllerSignUp);
+userRouter.get('/', validationJWT, controllerGetAllUsers);
 
 module.exports = userRouter;
