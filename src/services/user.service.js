@@ -22,8 +22,12 @@ const serviceGetAllUsers = async () => {
   return {
     statusCode: OK,
     message: result.map(({ dataValues }) => {
-      const user = dataValues;
-      delete user.password;
+      const user = {
+        id: dataValues.id,
+        displayName: dataValues.displayName,
+        email: dataValues.email,
+        image: dataValues.image,
+      }; 
 
       return user;
     }),

@@ -27,7 +27,7 @@ const loginValidation = async (req, res, next) => {
 
   const user = await User.findOne({ where: { email } });
   if (user) {
-    res.status(Conflict).json({ 
+    return res.status(Conflict).json({ 
       message: emailAlreadyExists });
   }
   next();
