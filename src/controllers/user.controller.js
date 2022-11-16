@@ -7,9 +7,8 @@ const { serviceGetAllUsers } = serviceUser;
 
 const controllerSignUp = async (req, res) => {
   const token = await serviceInsertUser(req.body);
-  console.log(token);
 
-  res.status(201).json({ token });
+  res.status(Created).json({ token });
 };
 
 const controllerGetAllUsers = async (_req, res) => {
