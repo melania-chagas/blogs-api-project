@@ -1,12 +1,12 @@
 const errorMessages = require('../helpers/errorMessages');
 const statusCodes = require('../helpers/statusCodes');
 
+const { BadRequest } = statusCodes;
+const { nameIsRequired } = errorMessages;
+
 const serviceCategories = require('../services/categories.service');
 
 const { serviceAddNewCategorie } = serviceCategories;
-
-const { BadRequest } = statusCodes;
-const { nameIsRequired } = errorMessages;
 
 const controllerAddNewCategorie = async (req, res) => {
   const { name } = req.body;
