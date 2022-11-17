@@ -6,7 +6,7 @@ const { nameIsRequired } = errorMessages;
 
 const serviceCategories = require('../services/categories.service');
 
-const { serviceAddNewCategorie } = serviceCategories;
+const { serviceAddNewCategorie, serviceGetAllCategories } = serviceCategories;
 
 const controllerAddNewCategorie = async (req, res) => {
   const { name } = req.body;
@@ -19,6 +19,12 @@ const controllerAddNewCategorie = async (req, res) => {
   return res.status(statusCode).json(message);
 };
 
+const controllerGetAllCategories = async (_req, res) => {
+  const { statusCode, message } = await serviceGetAllCategories();
+  res.status(statusCode).json(message);
+};
+
 module.exports = {
   controllerAddNewCategorie,
+  controllerGetAllCategories,
 };
