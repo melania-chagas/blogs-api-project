@@ -3,7 +3,7 @@ const { createToken } = require('../auth/jsonWebToken');
 const statusCodes = require('../helpers/statusCodes');
 const errorMessages = require('../helpers/errorMessages');
 
-const { OK, NotFound } = statusCodes;
+const { OK, NotFound, NoContent } = statusCodes;
 const { UserNotExist } = errorMessages;
 
 const serviceInsertUser = async (body) => {
@@ -57,8 +57,23 @@ const serviceGetUserById = async (id) => {
   };
 };
 
+const serviceDeleteUser = async (id) => {
+  // https://sequelize.org/docs/v6/core-concepts/paranoid/
+  
+  await User.destroy({
+    where: { id },
+    // "force: true" para que seja uma exclusão definitiva. Sem chamar o "force", ocorrerá uma exclusão reversível.
+    force: true,
+  });
+
+  return {
+    statusCode: NoContent,
+  };
+};
+
 module.exports = {
   serviceInsertUser,
   serviceGetAllUsers,
   serviceGetUserById,
+  serviceDeleteUser,
 };
