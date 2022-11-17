@@ -62,7 +62,7 @@ const serviceDeleteUser = async (id) => {
   
   await User.destroy({
     where: { id },
-    // "force: true" para que seja uma exclusão definitiva. Sem chamar o "force", ocorrerá uma exclusão reversível.
+    /* "force: true" para que seja uma exclusão definitiva. Sem chamar o "force", ocorrerá uma exclusão reversível. */
     force: true,
   });
 
