@@ -8,5 +8,6 @@ module.exports = {
   tokenNotFound: 'Token not found',
   expiredOrInvalidToken: 'Expired or invalid token',
   UserNotExist: 'User does not exist',
+  nameIsRequired: '"name" is required',
   
 };
