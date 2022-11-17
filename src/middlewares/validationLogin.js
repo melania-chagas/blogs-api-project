@@ -5,8 +5,8 @@ const statusCodes = require('../helpers/statusCodes');
 const errorMessages = require('../helpers/errorMessages');
 
 const { BadRequest, Conflict } = statusCodes;
-const { minimum8Characters, invalidEmail, minPassword6Characters,
-  emailAlreadyExists } = errorMessages;
+const { minimum8Characters, invalidEmail,
+  minPassword6Characters, emailAlreadyExists } = errorMessages;
 
 const loginValidation = async (req, res, next) => {
   const { email, password, displayName } = req.body;
