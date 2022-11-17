@@ -7,5 +7,6 @@ module.exports = {
   emailAlreadyExists: 'User already registered',
   tokenNotFound: 'Token not found',
   expiredOrInvalidToken: 'Expired or invalid token',
+  UserNotExist: 'User does not exist',
   
 };

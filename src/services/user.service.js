@@ -1,8 +1,10 @@
 const { User } = require('../models');
 const { createToken } = require('../auth/jsonWebToken');
 const statusCodes = require('../helpers/statusCodes');
+const errorMessages = require('../helpers/errorMessages');
 
-const { OK } = statusCodes;
+const { OK, NotFound } = statusCodes;
+const { UserNotExist } = errorMessages;
 
 const serviceInsertUser = async (body) => {
   const { displayName, email, password } = body;
@@ -34,7 +36,29 @@ const serviceGetAllUsers = async () => {
   };
 };
 
+const serviceGetUserById = async (id) => {
+  const user = await User.findOne({
+    attributes: ['id', 'displayName', 'email', 'image'],
+    where: { id },
+  });
+
+  if (!user) {
+    return {
+      statusCode: NotFound, 
+      message: {
+        message: UserNotExist,
+      },
+    };
+  }
+
+  return {
+    statusCode: OK,
+    message: user,
+  };
+};
+
 module.exports = {
   serviceInsertUser,
   serviceGetAllUsers,
+  serviceGetUserById,
 };

@@ -3,7 +3,7 @@ const statusCodes = require('../helpers/statusCodes');
 const serviceUser = require('../services/user.service');
 
 const { Created } = statusCodes;
-const { serviceGetAllUsers } = serviceUser;
+const { serviceGetAllUsers, serviceGetUserById } = serviceUser;
 
 const controllerSignUp = async (req, res) => {
   const token = await serviceInsertUser(req.body);
@@ -16,7 +16,14 @@ const controllerGetAllUsers = async (_req, res) => {
   res.status(statusCode).json(message);
 };
 
+const controllerGetUserById = async (req, res) => {
+  const { id } = req.params;
+  const { statusCode, message } = await serviceGetUserById(id);
+  res.status(statusCode).json(message);
+};
+
 module.exports = {
   controllerSignUp,
   controllerGetAllUsers,
+  controllerGetUserById,
 };
