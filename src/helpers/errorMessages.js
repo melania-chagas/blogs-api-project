@@ -10,5 +10,6 @@ module.exports = {
   UserNotExist: 'User does not exist',
   nameIsRequired: '"name" is required',
   PostNotExist: 'Post does not exist',
+  UnauthorizedUser: 'Unauthorized user',
   
 };

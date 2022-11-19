@@ -18,6 +18,8 @@ const validationJWT = (req, res, next) => {
     return res.status(Unauthorized).json({ message: expiredOrInvalidToken });
   }
 
+  req.body.userId = userId;
+
   next();
 };
 
