@@ -3,7 +3,7 @@ const statusCodes = require('../helpers/statusCodes');
 const serviceUser = require('../services/user.service');
 
 const { Created } = statusCodes;
-const { serviceGetAllUsers, serviceGetUserById, serviceDeleteUser } = serviceUser;
+const { serviceGetAllUsers, serviceGetUserById } = serviceUser;
 
 const controllerSignUp = async (req, res) => {
   const token = await serviceInsertUser(req.body);
@@ -22,16 +22,8 @@ const controllerGetUserById = async (req, res) => {
   res.status(statusCode).json(message);
 };
 
-const controllerDeleteUser = async (req, res) => {
-  const { id } = req.user;
-  const { statusCode, message } = await serviceDeleteUser(id);
-
-  res.status(statusCode).json(message);
-};
-
 module.exports = {
   controllerSignUp,
   controllerGetAllUsers,
   controllerGetUserById,
-  controllerDeleteUser,
 };
