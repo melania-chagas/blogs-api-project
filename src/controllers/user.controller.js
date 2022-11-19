@@ -1,6 +1,7 @@
 const { serviceInsertUser } = require('../services/user.service');
 const statusCodes = require('../helpers/statusCodes');
 const serviceUser = require('../services/user.service');
+const { verifyToken } = require('../auth/jsonWebToken');
 
 const { Created } = statusCodes;
 const { serviceGetAllUsers, serviceGetUserById } = serviceUser;
@@ -22,8 +23,18 @@ const controllerGetUserById = async (req, res) => {
   res.status(statusCode).json(message);
 };
 
+const controllerDeleteUser = async (req, res) => {
+  const token = req.header('Authorization');
+  const userId = verifyToken(token);
+
+  const { statusCode, message } = await serviceUser.serviceDeleteUser(userId);
+
+  res.status(statusCode).json(message);
+};
+
 module.exports = {
   controllerSignUp,
   controllerGetAllUsers,
   controllerGetUserById,
+  controllerDeleteUser,
 };
