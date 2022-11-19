@@ -9,5 +9,6 @@ module.exports = {
   expiredOrInvalidToken: 'Expired or invalid token',
   UserNotExist: 'User does not exist',
   nameIsRequired: '"name" is required',
+  PostNotExist: 'Post does not exist',
   
 };
