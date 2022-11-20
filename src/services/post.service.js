@@ -1,10 +1,24 @@
-const { BlogPost, Category, User } = require('../models');
+const { Op } = require('sequelize');
+const { BlogPost, Category, User, sequelize, PostCategory } = require('../models');
 
 const statusCodes = require('../helpers/statusCodes');
 
-const { OK, NotFound, Unauthorized, NoContent } = statusCodes;
+const {
+  OK,
+  NotFound,
+  Unauthorized,
+  NoContent,
+  BadRequest,
+  ServerError,
+  Created,
+} = statusCodes;
 
-const { PostNotExist, UnauthorizedUser } = require('../helpers/errorMessages');
+const {
+  PostNotExist,
+  UnauthorizedUser,
+  MissingCategory,
+  InternalError,
+} = require('../helpers/errorMessages');
 
 /* https://app.betrybe.com/learn/course/5e938f69-6e32-43b3-9685-c936530fd326/module/94d0e996-1827-4fbc-bc24-c99fb592925b/section/0ca77b1d-4770-4646-8368-167d2305e763/day/94e113d7-6a86-4536-a1d3-08f55f557811/lesson/8f287e0e-5c70-4df4-be95-7c631ef2bf57 */
 
@@ -100,9 +114,55 @@ const serviceDeletePost = async (userId, postId) => {
       message: UnauthorizedUser } };
 };
 
+const validateCategories = async (categoryIds) => {
+  const categories = await Category.findAll({
+    where: {
+      id: {
+        [Op.or]: categoryIds,
+      },
+    },
+  }); 
+  return categories.length === categoryIds.length;
+};
+
+const insertPost = async ({ title, content, categoryIds }, userId) => {
+  try {
+    const result = await sequelize.transaction(async (t) => {
+      const { dataValues } = await BlogPost.create(
+        { title, content, userId },
+        { transaction: t },
+      );
+      await Promise.all(categoryIds.map(async (categoryId) => {
+        await PostCategory.create(
+          { postId: dataValues.id, categoryId },
+          { transaction: t },
+        );
+      }));
+      return dataValues;
+    });
+    return { statusCode: Created, message: result };
+  } catch (error) {
+    return { statusCode: ServerError, message: InternalError };
+  }
+};
+
+const serviceInsertPost = async ({ title, content, categoryIds }, userId) => {
+  const validateCategoriesIds = await validateCategories(categoryIds);
+  if (!validateCategoriesIds) {
+    return {
+      statusCode: BadRequest,
+      message: { message: MissingCategory },
+    };
+  }
+  const result = await insertPost({ title, content, categoryIds }, userId);
+  return result;
+};
+
 module.exports = {
   serviceGetAllPosts,
   serviceGetPostById,
   serviceUpdatePost,
   serviceDeletePost,
+  serviceInsertPost,
+
 };

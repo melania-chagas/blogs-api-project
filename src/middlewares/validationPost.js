@@ -4,10 +4,14 @@ const errorMessages = require('../helpers/errorMessages');
 const { BadRequest } = statusCodes;
 const { requiredFields } = errorMessages;
 
-const postValidation = async (req, res, next) => {
-  const { title, content } = req.body;
+const verifyCreatePost = (title, content, categoryIds) => title && content && categoryIds;
+const verifyUpdatePost = (title, content) => title && content;
 
-  if (title && content) {
+const postValidation = async (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+
+  if ((req.method === 'PUT' && verifyUpdatePost(title, content))
+    || (req.method === 'POST' && verifyCreatePost(title, content, categoryIds))) {
     return next();
   }
 

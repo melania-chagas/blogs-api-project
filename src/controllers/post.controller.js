@@ -3,6 +3,7 @@ const {
   serviceGetPostById,
   serviceUpdatePost,
   serviceDeletePost,
+  serviceInsertPost,
 } = require('../services/post.service');
 
 const controllerGetAllPosts = async (_req, res) => {
@@ -32,9 +33,16 @@ const controllerDeletePost = async (req, res) => {
   res.status(statusCode).json(message);
 };
 
+const controllerInsertPost = async (req, res) => {
+  const { title, content, userId, categoryIds } = req.body;
+  const { statusCode, message } = await serviceInsertPost({ title, content, categoryIds }, userId);
+  res.status(statusCode).json(message);
+};
+
 module.exports = {
   controllerGetAllPosts,
   controllerGetPostById,
   controllerUpdatePost,
   controllerDeletePost,
+  controllerInsertPost,
 };

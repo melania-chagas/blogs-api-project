@@ -11,5 +11,6 @@ module.exports = {
   nameIsRequired: '"name" is required',
   PostNotExist: 'Post does not exist',
   UnauthorizedUser: 'Unauthorized user',
-  
+  MissingCategory: 'one or more "categoryIds" not found',
+  InternalError: 'Internal Error',
 };
