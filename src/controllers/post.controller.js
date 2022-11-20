@@ -2,6 +2,7 @@ const {
   serviceGetAllPosts,
   serviceGetPostById,
   serviceUpdatePost,
+  serviceDeletePost,
 } = require('../services/post.service');
 
 const controllerGetAllPosts = async (_req, res) => {
@@ -22,8 +23,18 @@ const controllerUpdatePost = async (req, res) => {
   res.status(statusCode).json(message);
 };
 
+const controllerDeletePost = async (req, res) => {
+  const { id: postId } = req.params;
+  const { userId } = req.body;
+
+  const { statusCode, message } = await serviceDeletePost(userId, postId);
+
+  res.status(statusCode).json(message);
+};
+
 module.exports = {
   controllerGetAllPosts,
   controllerGetPostById,
   controllerUpdatePost,
+  controllerDeletePost,
 };

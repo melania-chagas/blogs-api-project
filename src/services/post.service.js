@@ -2,7 +2,7 @@ const { BlogPost, Category, User } = require('../models');
 
 const statusCodes = require('../helpers/statusCodes');
 
-const { OK, NotFound, Unauthorized } = statusCodes;
+const { OK, NotFound, Unauthorized, NoContent } = statusCodes;
 
 const { PostNotExist, UnauthorizedUser } = require('../helpers/errorMessages');
 
@@ -75,8 +75,34 @@ const serviceUpdatePost = async ({ title, content }, postId, userId) => {
   return serviceGetPostById(postId);
 };
 
+const serviceDeletePost = async (userId, postId) => {
+  const result = await serviceGetPostById(postId);
+
+  if (result.statusCode === NotFound) {
+    return result;
+  }
+
+  const { id } = result.message.user;
+  
+  if (id === userId) {
+    await BlogPost.destroy({ 
+      where: { id: postId },
+      force: true,
+    });
+    return { 
+      statusCode: NoContent,
+    };
+  }
+  
+  return { 
+    statusCode: Unauthorized,
+    message: { 
+      message: UnauthorizedUser } };
+};
+
 module.exports = {
   serviceGetAllPosts,
   serviceGetPostById,
   serviceUpdatePost,
+  serviceDeletePost,
 };
