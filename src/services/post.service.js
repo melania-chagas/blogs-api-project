@@ -125,6 +125,8 @@ const validateCategories = async (categoryIds) => {
   return categories.length === categoryIds.length;
 };
 
+/* https://app.betrybe.com/learn/course/5e938f69-6e32-43b3-9685-c936530fd326/module/94d0e996-1827-4fbc-bc24-c99fb592925b/section/0ca77b1d-4770-4646-8368-167d2305e763/day/22fa9643-5f27-41f5-943b-2c7cc1c67c01/lesson/a46df24c-0175-49d4-8557-bdcd947eb168 */
+
 const insertPost = async ({ title, content, categoryIds }, userId) => {
   try {
     const result = await sequelize.transaction(async (t) => {
